@@ -1,74 +1,138 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b6b53">
-  <title>BijliSaathi – Voice Electricity Assistant</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BijliSaathi</title>
+<style>
+body{font-family:Arial;background:#f3efff;margin:0;padding:20px}
+.card{background:white;padding:20px;border-radius:18px;margin:15px auto;max-width:450px}
+h1{color:#7040b5;text-align:center}
+button,select,input{padding:13px;margin:7px 0;width:100%;border-radius:10px;border:1px solid #ccc;font-size:16px}
+button{background:#7040b5;color:white;border:0}
+#response{text-align:center;font-size:19px;line-height:1.6}
+</style>
 </head>
 <body>
-  <main class="shell">
-    <header class="top">
-      <div class="brand-mark">⚡</div>
-      <div><h1>BijliSaathi</h1><p>Your electricity helper, in your language</p></div>
-      <span class="demo-tag">DEMO</span>
-    </header>
 
-    <section class="welcome card">
-      <p class="eyebrow">NAMASKARAM!</p>
-      <h2 id="welcomeTitle">How can I help you today?</h2>
-      <p id="welcomeText">Speak or type a question about your electricity bill.</p>
-      <label for="language">Choose language / భాష ఎంచుకోండి</label>
-      <select id="language">
-        <option value="te-IN">తెలుగు (Telugu)</option>
-        <option value="hi-IN">हिन्दी (Hindi)</option>
-        <option value="en-IN">English</option>
-      </select>
-      <button id="micButton" class="mic" type="button">🎙️ Tap to speak</button>
-      <p id="voiceStatus" class="status" aria-live="polite">Microphone is ready when supported by your browser.</p>
-      <div class="typed-row">
-        <input id="questionInput" type="text" placeholder="Or type: Na current bill entha?" aria-label="Type your question">
-        <button id="sendButton" type="button">Send</button>
-      </div>
-    </section>
+<div class="card">
+<h1>⚡ BijliSaathi</h1>
+<p>Your Voice Electricity Assistant</p>
 
-    <section class="card response-card">
-      <div class="section-heading"><h2>Assistant response</h2><button id="repeatButton" class="light" type="button">🔊 Repeat</button></div>
-      <p id="response" aria-live="polite">Your assistant's response will appear here.</p>
-    </section>
+<select id="language">
+<option value="te-IN">తెలుగు</option>
+<option value="hi-IN">हिन्दी</option>
+<option value="en-IN">English</option>
+</select>
 
-    <section class="grid">
-      <article class="card">
-        <h2>⚡ Demo electricity bill</h2>
-        <p class="muted">Sample data only — not connected to a real electricity board.</p>
-        <div class="bill-number">₹850</div>
-        <div class="facts"><span>Units used</span><strong>120 units</strong></div>
-        <div class="facts"><span>Due date</span><strong>30 November 2026</strong></div>
-        <div class="facts"><span>Consumer ID</span><strong>DEMO-1024</strong></div>
-      </article>
-      <article class="card">
-        <h2>⏰ Payment reminder</h2>
-        <p class="muted">Set a reminder before the demo bill due date.</p>
-        <label for="reminderDate">Reminder date</label>
-        <input id="reminderDate" type="date" value="2026-11-29">
-        <button id="reminderButton" type="button">Set reminder</button>
-        <p id="reminderStatus" class="status" aria-live="polite"></p>
-      </article>
-    </section>
+<button onclick="listen()">🎙️ Tap to Speak</button>
+<p id="status">Ready to listen</p>
+<p id="response">నమస్కారం! మీ పేరు ఏమిటి?</p>
+<button onclick="repeat()">🔊 Repeat</button>
 
-    <section class="card">
-      <h2>🔌 Power-cut assistance</h2>
-      <p class="muted">Tell us your locality. This demo guides you to the official complaint channel; it does not submit a real complaint.</p>
-      <div class="typed-row">
-        <input id="areaInput" type="text" placeholder="Enter your village / area">
-        <button id="areaButton" type="button">Get help</button>
-      </div>
-      <p id="areaStatus" aria-live="polite"></p>
-    </section>
+<input id="typed" placeholder="Or type your answer">
+<button onclick="handle(document.getElementById('typed').value)">Send</button>
+</div>
 
-    <footer>BijliSaathi prototype · Demo information only · Verify bills and payments with your electricity provider.</footer>
-  </main>
-  <script src="app.js"></script>
+<div class="card" id="bill" hidden>
+<h2>⚡ Demo Electricity Bill</h2>
+<h1>₹850</h1>
+<p>Units: 120</p>
+<p>Due date: 30 November 2026</p>
+<p>Demo information only.</p>
+</div>
+
+<div class="card" id="reminder" hidden>
+<h2>⏰ Payment Reminder</h2>
+<input type="date" id="date">
+<button onclick="setReminder()">Set Reminder</button>
+<p id="reminderStatus"></p>
+</div>
+
+<div class="card" id="power" hidden>
+<h2>🔌 Power-cut Assistance</h2>
+<p>Contact your electricity provider through its official complaint channel. This demo does not submit a complaint.</p>
+</div>
+
+<script>
+let step=0,name='',area='',last='';
+let lang='te-IN';
+
+const questions={
+'te-IN':['నమస్కారం! మీ పేరు ఏమిటి?','మీరు ఏ గ్రామంలో లేదా ప్రాంతంలో ఉంటారు?','మీకు ఏ సహాయం కావాలి? బిల్లు, కరెంట్ సమస్య లేదా రిమైండరా?'],
+'hi-IN':['नमस्ते! आपका नाम क्या है?','आप किस गाँव या क्षेत्र में रहते हैं?','आपको बिल, बिजली की समस्या या रिमाइंडर में क्या मदद चाहिए?'],
+'en-IN':['Hello! What is your name?','Which village or area do you live in?','What help do you need: bill, power problem or reminder?']
+};
+
+function say(t){
+last=t;
+document.getElementById('response').textContent=t;
+if('speechSynthesis' in window){
+speechSynthesis.cancel();
+let u=new SpeechSynthesisUtterance(t);
+u.lang=lang;
+speechSynthesis.speak(u);
+}
+}
+
+function repeat(){say(last)}
+
+function listen(){
+let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR){document.getElementById('status').textContent='Use Chrome and allow microphone access.';return}
+let r=new SR();
+r.lang=lang;
+r.onresult=e=>handle(e.results[0][0].transcript);
+r.onerror=e=>document.getElementById('status').textContent='Voice issue: '+e.error;
+document.getElementById('status').textContent='Listening...';
+r.start();
+}
+
+function handle(t){
+if(!t.trim())return;
+if(step===0){name=t;step=1;say(questions[lang][1]);return}
+if(step===1){area=t;step=2;say(questions[lang][2]);return}
+if(step===2){
+step=3;
+let q=t.toLowerCase();
+say(lang==='te-IN'?'ధన్యవాదాలు '+name+'! మీకు సహాయం చేస్తాను.':lang==='hi-IN'?'धन्यवाद '+name+'! मैं आपकी मदद करूँगा।':'Thank you '+name+'! I will help you.');
+setTimeout(()=>help(q),1500);
+return;
+}
+help(t.toLowerCase());
+}
+
+function help(q){
+if(/bill|బిల్లు|बिल|ఎంత/.test(q)){
+document.getElementById('bill').hidden=false;
+say(lang==='te-IN'?'మీ డెమో బిల్లు 850 రూపాయలు.':lang==='hi-IN'?'आपका डेमो बिल 850 रुपये है।':'Your demo bill is 850 rupees.');
+}
+else if(/remind|రిమైండర్|याद/.test(q)){
+document.getElementById('reminder').hidden=false;
+say(lang==='te-IN'?'రిమైండర్ తేదీ ఎంచుకోండి.':lang==='hi-IN'?'रिमाइंडर की तारीख चुनें।':'Choose your reminder date.');
+}
+else if(/power|cut|current|కరెంట్|విద్యుత్|बिजली/.test(q)){
+document.getElementById('power').hidden=false;
+say(lang==='te-IN'?'మీ విద్యుత్ సంస్థ అధికారిక ఫిర్యాదు మార్గాన్ని సంప్రదించండి.':lang==='hi-IN'?'अपनी बिजली कंपनी से संपर्क करें।':'Contact your electricity provider.');
+}
+else{
+say(lang==='te-IN'?'క్షమించండి, మళ్లీ చెప్పండి.':lang==='hi-IN'?'कृपया दोबारा बताएं।':'Please try again.');
+}
+}
+
+function setReminder(){
+let d=document.getElementById('date').value;
+document.getElementById('reminderStatus').textContent=d?'Demo reminder set for '+d+'. No real notification will be sent.':'Choose a date.';
+}
+
+document.getElementById('language').onchange=e=>{
+lang=e.target.value;
+say(questions[lang][step<3?step:2]);
+};
+
+lang='te-IN';
+say(questions[lang][0]);
+</script>
 </body>
 </html>
