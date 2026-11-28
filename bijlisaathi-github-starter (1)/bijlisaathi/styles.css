@@ -1,1 +1,32 @@
 :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#17221e;background:#f2f7f4;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.shell{max-width:850px;margin:0 auto;padding:22px 16px 36px}.top{display:flex;align-items:center;gap:13px;margin:8px 0 22px}.brand-mark{width:48px;height:48px;border-radius:15px;background:#0b6b53;color:white;display:grid;place-items:center;font-size:26px}.top h1{font-size:24px;margin:0}.top p{margin:2px 0 0;color:#64736c}.demo-tag{margin-left:auto;background:#fff1cf;color:#805400;padding:7px 10px;border-radius:20px;font-size:12px;font-weight:800}.card{background:white;border:1px solid #e0eae4;border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 5px 18px #153b2410}.welcome{background:linear-gradient(145deg,#e8f7ef,#fff)}.eyebrow{font-size:12px;font-weight:800;letter-spacing:1.5px;color:#0b7658}.card h2{font-size:19px;margin:0 0 10px}.welcome h2{font-size:25px}.muted,.welcome p{color:#64736c;line-height:1.5}.label, label{display:block;font-weight:650;margin:16px 0 7px}select,input{width:100%;border:1px solid #cbd8d0;border-radius:11px;padding:13px;font:inherit;background:#fff;color:#17221e}button{border:0;border-radius:11px;background:#0b6b53;color:white;padding:13px 17px;font:inherit;font-weight:700;cursor:pointer}button:focus,input:focus,select:focus{outline:3px solid #9ed9bf;outline-offset:2px}.mic{display:block;width:100%;margin-top:14px;padding:17px;font-size:17px;background:#075b47}.mic.listening{background:#b44728}.status{font-size:13px;color:#64736c;min-height:20px}.typed-row{display:flex;gap:9px;margin-top:12px}.typed-row input{min-width:0;flex:1}.typed-row button{white-space:nowrap}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.light{background:#e8f4ed;color:#0b6b53;padding:9px 12px}.response-card{border-left:5px solid #0b8a62}.response-card p{line-height:1.6;white-space:pre-wrap}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid .card{margin:0}.bill-number{font-size:34px;font-weight:800;color:#0b6b53;margin:12px 0}.facts{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #edf1ee;font-size:14px}.facts span{color:#64736c}footer{text-align:center;color:#718078;font-size:12px;padding:18px 5px;line-height:1.5}@media(max-width:620px){.grid{grid-template-columns:1fr}.typed-row{flex-wrap:wrap}.typed-row input{flex-basis:100%}.typed-row button{width:100%}.card{padding:17px}}
+/* BijliSaathi Customer Profile */
+.customer-profile {
+    background: #ffffff;
+    border: 2px solid #8054c7;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(80, 40, 130, 0.12);
+}
+
+.customer-profile h2 {
+    color: #7041b8;
+    margin-bottom: 15px;
+}
+
+.customer-profile h3 {
+    color: #7041b8;
+    margin-top: 20px;
+}
+
+.customer-profile p {
+    color: #333333;
+    margin: 10px 0;
+}
+
+.customer-profile .demo-note {
+    color: #8054c7;
+    font-size: 13px;
+    font-style: italic;
+}

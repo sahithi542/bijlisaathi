@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +14,20 @@ button,select,input{padding:13px;margin:7px 0;width:100%;border-radius:10px;bord
 button{background:#7040b5;color:white;border:0}
 #response{text-align:center;font-size:19px;line-height:1.6}
 </style>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7040b5">
+  <title>BijliSaathi - Voice Electricity Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+>>>>>>> Stashed changes
 </head>
+
 <body>
+<<<<<<< Updated upstream
 
 <div class="card">
 <h1>⚡ BijliSaathi</h1>
@@ -134,5 +147,136 @@ say(questions[lang][step<3?step:2]);
 lang='te-IN';
 say(questions[lang][0]);
 </script>
+=======
+  <main class="shell">
+
+    <header class="top">
+      <div class="brand-mark">⚡</div>
+      <div>
+        <h1>BijliSaathi</h1>
+        <p>Your electricity helper, in your language</p>
+      </div>
+      <span class="demo-tag">DEMO</span>
+    </header>
+
+    <section class="welcome card">
+      <p class="eyebrow">NAMASKARAM!</p>
+
+      <h2 id="welcomeTitle">Welcome to BijliSaathi</h2>
+
+      <p id="welcomeText">
+        Your friendly electricity assistant.
+      </p>
+
+      <label for="language">Choose your language / భాష ఎంచుకోండి</label>
+
+      <select id="language">
+        <option value="te-IN">తెలుగు (Telugu)</option>
+        <option value="hi-IN">हिन्दी (Hindi)</option>
+        <option value="en-IN">English</option>
+      </select>
+
+      <button id="micButton" class="mic" type="button">
+        🎙️ Tap to Speak
+      </button>
+
+      <p class="voice-hint">
+        Speak naturally. No registration form!
+      </p>
+
+      <p id="voiceStatus" class="status" aria-live="polite">
+        Assistant is ready.
+      </p>
+
+      <div class="typed-row">
+        <input
+          id="questionInput"
+          type="text"
+          placeholder="Or type your answer"
+          aria-label="Type your answer">
+
+        <button id="sendButton" type="button">Send</button>
+      </div>
+    </section>
+
+    <section class="card response-card">
+      <div class="section-heading">
+        <h2>🤖 BijliSaathi Says</h2>
+
+        <button id="repeatButton" class="light" type="button">
+          🔊 Repeat
+        </button>
+      </div>
+
+      <p id="response" aria-live="polite">
+        నమస్కారం! మీ పేరు ఏమిటి?
+      </p>
+    </section>
+
+    <section class="grid">
+
+      <article class="card" id="billCard" hidden>
+        <h2>⚡ Demo Electricity Bill</h2>
+        <p class="muted">Sample information only.</p>
+
+        <div class="bill-number">₹850</div>
+
+        <div class="facts">
+          <span>Units used</span>
+          <strong>120 units</strong>
+        </div>
+
+        <div class="facts">
+          <span>Due date</span>
+          <strong>30 November 2026</strong>
+        </div>
+
+        <div class="facts">
+          <span>Consumer ID</span>
+          <strong>DEMO-1024</strong>
+        </div>
+      </article>
+
+      <article class="card" id="reminderCard" hidden>
+        <h2>⏰ Payment Reminder</h2>
+        <p class="muted">Set a reminder for your demo bill.</p>
+
+        <label for="reminderDate">Reminder date</label>
+        <input
+          id="reminderDate"
+          type="date"
+          value="2026-11-29">
+
+        <button id="reminderButton" type="button">
+          Set Reminder
+        </button>
+
+        <p id="reminderStatus" class="status" aria-live="polite"></p>
+      </article>
+
+    </section>
+
+    <section class="card" id="powerCard" hidden>
+      <h2>🔌 Power-cut Assistance</h2>
+
+      <p>
+        Contact your electricity provider through its
+        official complaint channel.
+      </p>
+
+      <p class="muted">
+        This demo does not submit a real complaint.
+      </p>
+    </section>
+
+    <footer>
+      BijliSaathi Prototype · Demo information only.
+      Verify bills and payments with your electricity provider.
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+>>>>>>> Stashed changes
 </body>
 </html>

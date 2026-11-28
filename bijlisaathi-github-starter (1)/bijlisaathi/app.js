@@ -229,4 +229,8 @@ document.getElementById('reminderButton').addEventListener('click', () => {
 });
 
 // Start by asking the user's name.
+<<<<<<< Updated upstream
 askCurrentStep();
+=======
+askCurrentStep();
+>>>>>>> Stashed changes
